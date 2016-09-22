@@ -1,0 +1,21 @@
+{
+    "name": "cyberduck/mailgrasp",
+    "description": "",
+    "license": "MIT",
+    "homepage": "https://www.cyberduck.co.uk",
+    "authors": [
+        {
+            "name": "Simone Todaro",
+            "email": "simo.todaro@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/mail": "^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cyberduck\\MailGrasp\\": ""
+        }
+    },
+}
