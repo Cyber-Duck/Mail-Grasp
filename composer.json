@@ -21,7 +21,8 @@
         "phpunit/phpunit": "^5.5",
         "laravel/framework": "^5.0",
         "symfony/css-selector": "2.7.*",
-        "symfony/dom-crawler": "2.7.*"
+        "symfony/dom-crawler": "2.7.*",
+        "squizlabs/php_codesniffer": "2.*"
     },
     "autoload": {
         "psr-4": {

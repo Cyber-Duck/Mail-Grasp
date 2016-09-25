@@ -121,13 +121,13 @@ class Message
                 if (strpos($this->data['body'], $value) === false) {
                     return false;
                 }
-            } else if ($key == 'part') {
+            } elseif ($key == 'part') {
                 foreach ($value['part'] as $subkey => $part) {
                     if (strpos($this->data['part'][$subkey], $part) === false) {
                         return false;
                     }
                 }
-            } else if (is_array($value)) {
+            } elseif (is_array($value)) {
                 if (count($value) != count(array_intersect_key($this->data[$key], $value))) {
                     return false;
                 }
