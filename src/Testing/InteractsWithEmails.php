@@ -99,6 +99,24 @@ trait InteractsWithEmails
         return $this->seeEmail($email, MailGrasp::QUEUED);
     }
 
+
+    public function seeInEmail($email, $text)
+    {
+        $found = $this->mailer->getEmail($email) ? true : false;
+
+        $this->assertTrue($found, $this->mailer->getError($email));
+
+        $rawPattern = preg_quote($text, '/');
+        $escapedPattern = preg_quote(e($text), '/');
+        $pattern = $rawPattern == $escapedPattern
+                ? $rawPattern : "({$rawPattern}|{$escapedPattern})";
+
+        $this->assertRegExp(
+            "/$pattern/i",
+            $this->mailer->getEmail($email)->getBody()
+        );
+    }
+
     protected function clickInEmail($email, $selector = 'a')
     {
         $this->seeEmail($email);

@@ -91,6 +91,20 @@ class AssertionsTest extends TestCase
         });
     }
 
+    public function test_see_in_email()
+    {
+        $this->visit('/');
+        Mail::queue('email.template', [], function ($m) {
+            $m->from('hello@app.com', 'Your Application');
+            $m->to('hi@app.com', 'Your User');
+            $m->subject('Your Reminder!');
+        });
+        $this->seeInEmail(function ($m) {
+            $m->from('hello@app.com', 'Your Application');
+            $m->to('hi@app.com', 'Your User');
+        }, 'Lorem');
+    }
+
     public function test_click_in_email()
     {
         $this->visit('/');
