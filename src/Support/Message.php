@@ -117,17 +117,7 @@ class Message
     {
         $criteria = $message->getEmailData();
         foreach ($criteria as $key => $value) {
-            if ($key == 'body') {
-                if (strpos($this->data['body'], $value) === false) {
-                    return false;
-                }
-            } elseif ($key == 'part') {
-                foreach ($value['part'] as $subkey => $part) {
-                    if (strpos($this->data['part'][$subkey], $part) === false) {
-                        return false;
-                    }
-                }
-            } elseif (is_array($value)) {
+            if (is_array($value)) {
                 if (count($value) != count(array_intersect_key($this->data[$key], $value))) {
                     return false;
                 }
@@ -144,7 +134,6 @@ class Message
     {
         return $this->data;
     }
-
 
     public function build($view, array $data, $callback)
     {

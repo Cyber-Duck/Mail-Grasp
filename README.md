@@ -15,14 +15,13 @@ composer require cyber-duck/cyber-duck/mailgrasp --dev
 
 ##Usage
 Add the `InteractsWithEmails` to your test class. That's it!  
-The custom Mailer will be swapped as soon as the visit() method has been called.  
-If your testClass doesn't use the build in `InteractsWithPages` method, the custom mailer should be manually enabled by calling
 ```
-MailGrasp::swap();
+use \Cyberduck\MailGrasp\Testing\InteractsWithEmails;
 ```
+The custom mailer will be initialised as soon as the visit() method is called.  
 
 ###seeEmails
-It checks if exactly `$count` emails have been sent.
+It checks if exactly `$count` emails have been sent or enqueued.
 
 ```
 $this->visit('/route/which/sends/2/emails')
@@ -33,12 +32,12 @@ $this->visit('/route/which/sends/2/emails')
 It checks if exactly `$count` emails have been enqueued.
 
 ```
-$this->visit('/route/which/queues/2/emails')
+$this->visit('/route/which/enqueues/2/emails')
     ->seeEmailsInQueue(2);
 ```
 
 ###dontSeeEmails / notSeeEmails
-It checks that no email has been sent.
+It checks that no email has been sent or enqueued.
 
 ```
 $this->visit('/route/with/no/emails')
@@ -64,7 +63,105 @@ $this->visit('/route/with/no/emails')
 ```
 
 ###seeEmail
+It checks that an email matching given critaria has been sent or enqueued.
+
+```
+$this->visit('/route/which/sends/emails')
+    ->seeEmail(function($m) {
+        $m->from('from@test.com');
+        $m->to('to@test.com');
+        $m->subject('Subject');
+    });
+
+//OR
+
+$this->visit('/route/which/sends/emails')
+    ->seeEmail($this->message()
+        ->from('from@test.com')
+        ->to('to@test.com')
+        ->subject('Subject');
+    });
+
+```
 
 ###seeEmailInQueue
+It checks that an email matching given critaria has been enqueued.
+
+```
+$this->visit('/route/which/enqueues/emails')
+    ->seeEmailInQueue(function($m) {
+        $m->from('from@test.com');
+        $m->to('to@test.com');
+        $m->subject('Subject');
+    });
+
+//OR
+
+$this->visit('/route/which/enqueues/emails')
+    ->seeEmailInQueue($this->message()
+        ->from('from@test.com')
+        ->to('to@test.com')
+        ->subject('Subject');
+    });
+```
+
+###seeInEmail
+It checks that an email matching the given critaria contains the given string.
+
+```
+$this->visit('/route/which/sends/emails')
+    ->seeInEmail(function($m) {
+        $m->from('from@test.com');
+        $m->to('to@test.com');
+        $m->subject('Subject');
+    }, 'Lorem ipsum dolor sit amet');
+
+//OR
+
+$this->visit('/route/which/sends/emails')
+    ->seeInEmail($this->message()
+        ->from('from@test.com')
+        ->to('to@test.com')
+        ->subject('Subject');
+    }, 'Lorem ipsum dolor sit amet);
+
+```
 
 ###clickInEmail
+Visit the page in the email link. Useful to test activation links.
+```
+$this->visit('/route/which/enqueues/emails')
+    ->clickInEmail(function($m) {
+        $m->from('from@test.com');
+        $m->to('to@test.com');
+        $m->subject('Subject');
+    });
+
+//OR
+
+$this->visit('/route/which/enqueues/emails')
+    ->clickInEmail($this->message()
+        ->from('from@test.com')
+        ->to('to@test.com')
+        ->subject('Subject');
+    });
+```
+
+If there is more than one link in the email, it's possible to select the link passing a css selector as second parameter.
+```
+$this->visit('/route/which/enqueues/emails')
+    ->clickInEmail(function($m) {
+        $m->from('from@test.com');
+        $m->to('to@test.com');
+        $m->subject('Subject');
+    }, 'a.activation-link');
+
+//OR
+
+$this->visit('/route/which/enqueues/emails')
+    ->clickInEmail($this->message()
+        ->from('from@test.com')
+        ->to('to@test.com')
+        ->subject('Subject');
+    }, 'a.activation-link');
+```
