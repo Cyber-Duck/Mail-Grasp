@@ -1,21 +1,37 @@
 {
     "name": "cyber-duck/mailgrasp",
-    "description": "",
+    "type": "library",
+    "description": "A package for Laravel applications (5.1) to add support for email testing in your test classes.",
+    "keywords": ["laravel", "testing", "emails"],
     "license": "MIT",
     "homepage": "https://www.cyberduck.co.uk",
     "authors": [
         {
             "name": "Simone Todaro",
-            "email": "simo.todaro@gmail.com"
+            "email": "simo.todaro@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "illuminate/mail": "^5.1"
+        "illuminate/mail": "^5.0",
+        "illuminate/view": "^5.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9.5",
+        "phpunit/phpunit": "^5.5",
+        "laravel/framework": "^5.0",
+        "symfony/css-selector": "2.7.*",
+        "symfony/dom-crawler": "2.7.*"
     },
     "autoload": {
         "psr-4": {
-            "Cyberduck\\MailGrasp\\": ""
+            "Cyberduck\\MailGrasp\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/TestCase.php",
+            "tests/resources/view_helper.php"
+        ]
     }
 }
