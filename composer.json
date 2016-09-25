@@ -4,7 +4,7 @@
     "description": "A package for Laravel applications (5.1) to add support for email testing in your test classes.",
     "keywords": ["laravel", "testing", "emails"],
     "license": "MIT",
-    "homepage": "https://www.cyberduck.co.uk",
+    "homepage": "https://github.com/Cyber-Duck/Mail-Grasp",
     "authors": [
         {
             "name": "Simone Todaro",
