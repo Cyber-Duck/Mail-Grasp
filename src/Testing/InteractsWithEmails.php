@@ -14,6 +14,11 @@ trait InteractsWithEmails
         return new Message();
     }
 
+    /**
+     * Swap the mailer when the visit function is called.
+     *
+     * @param string $uri the page to visit.
+     */
     public function visit($uri)
     {
         if (!$this->mailer instanceof MailGrasp) {
@@ -22,11 +27,6 @@ trait InteractsWithEmails
         return parent::visit($uri);
     }
 
-    /**
-     * Assert that $count emails have been sent.
-     *
-     * @param integer $count number of email which are expected to be sent.
-     */
     public function seeEmails($count, $queue = MailGrasp::UNQUEUED)
     {
         $count = intval($count);
@@ -50,9 +50,6 @@ trait InteractsWithEmails
         return $this->seeEmails($count, MailGrasp::QUEUED);
     }
 
-    /**
-     * Assert that no email has been sent.
-     */
     public function dontSeeEmails($queue = MailGrasp::UNQUEUED)
     {
         if ($queue) {
@@ -69,9 +66,6 @@ trait InteractsWithEmails
         return $this;
     }
 
-    /**
-     * Alias for dontSeeEmails().
-     */
     public function notSeeEmails()
     {
         return $this->dontSeeEmails();
@@ -82,14 +76,11 @@ trait InteractsWithEmails
         return $this->dontSeeEmails(MailGrasp::QUEUED);
     }
 
-    public function notSeeEmailsQueue()
+    public function notSeeEmailsInQueue()
     {
         return $this->dontSeeEmails(MailGrasp::QUEUED);
     }
 
-    /**
-     * Assert that an email matching the given criterias has been sent.
-     */
     public function seeEmail($email, $queued = MailGrasp::UNQUEUED)
     {
         if ($queued) {
@@ -108,19 +99,11 @@ trait InteractsWithEmails
         return $this->seeEmail($email, MailGrasp::QUEUED);
     }
 
-    /**
-     * Visit the link on the email matching the given criteria.
-     *
-     * @param string $from The expected sender.
-     * @param string $to The expected receiver.
-     * @param string $subject The expected subject.
-     * @param string $selector A css selector to identify the link.
-     */
-    protected function clickInEmail($email)
+    protected function clickInEmail($email, $selector = 'a')
     {
         $this->seeEmail($email);
         $found = $this->mailer->getEmail($email);
-        $this->crawler = new Crawler($email->getBody(), 'https://mail.test');
+        $this->crawler = new Crawler($found->getBody(), 'https://mail.test');
         $links = $this->crawler->filter($selector);
 
         //Todo check if the first element is a link.

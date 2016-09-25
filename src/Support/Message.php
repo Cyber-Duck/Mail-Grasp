@@ -1,6 +1,8 @@
 <?php
 namespace Cyberduck\MailGrasp\Support;
 
+use Illuminate\Support\Arr;
+
 class Message
 {
     protected $data;
@@ -147,12 +149,11 @@ class Message
     public function build($view, array $data, $callback)
     {
         $this->data = [];
-        $this->addContent($view $data);
-        $this->callMessageBuilder($callback, $message);
-        return $message;
+        $this->addContent($view, $this->data);
+        $this->callMessageBuilder($callback, $this);
     }
 
-    protected function addContent($view, $plain, $raw, $data)
+    protected function addContent($view, $data)
     {
         list($view, $plain, $raw) = $this->parseView($view);
 
@@ -189,12 +190,12 @@ class Message
             ];
         }
 
-        throw new InvalidArgumentException('Invalid view.');
+        throw new \InvalidArgumentException('Invalid view.');
     }
 
     protected function getView($view, $data)
     {
-        return App::make('view')->make($view, $data)->render();
+        return app()->make('view')->make($view, $data)->render();
     }
 
     protected function callMessageBuilder($callback, $message)
@@ -207,7 +208,7 @@ class Message
             return $this->container->make($callback)->mail($message);
         }
 
-        throw new InvalidArgumentException('Callback is not valid.');
+        throw new \InvalidArgumentException('Callback is not valid.');
     }
 
     public function __get($key)

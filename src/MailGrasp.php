@@ -2,11 +2,12 @@
 namespace Cyberduck\MailGrasp;
 
 use Cyberduck\MailGrasp\Support\Message;
-use Cyberduck\MailGrasp\Support\Collection;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Contracts\Mail\MailQueue;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Mail;
 
 class MailGrasp implements Mailer, MailQueue
 {
@@ -19,17 +20,12 @@ class MailGrasp implements Mailer, MailQueue
     const QUEUED = true;
     const UNQUEUED = false;
 
-    public static function swap()
-    {
-        return new MailGrasp();
-    }
-
     public function __construct()
     {
         $this->emails = new Collection();
         $this->queued = new Collection();
 
-        $from = config('mail.from');
+        $from = Config::get('mail.from');
         if (is_array($from) && isset($from['address'])) {
             $this->from = [
                 'address' => $from['address'],
@@ -37,7 +33,7 @@ class MailGrasp implements Mailer, MailQueue
             ];
         }
 
-        $to = config('mail.to');
+        $to = Config::get('mail.to');
         if (is_array($to) && isset($to['address'])) {
             $this->to = [
                 'address' => $to['address'],
@@ -66,7 +62,9 @@ class MailGrasp implements Mailer, MailQueue
 
         $collection = $queued ? $this->queued : $this->emails;
 
-        $index = $collection->search($email);
+        $index = $collection->search(function ($item, $key) use ($email) {
+            return $item->match($email) !== false;
+        });
 
         if ($index !== false) {
             return $collection->get($index);
@@ -92,6 +90,8 @@ class MailGrasp implements Mailer, MailQueue
 
     public function getError($email)
     {
+        $email = $this->getEmailFromClosure($email);
+
         $message = "\nExpected an email";
         $message .= "\033[33m{".$email."\033[0m\n\n";
 
@@ -118,7 +118,7 @@ class MailGrasp implements Mailer, MailQueue
         return $this->send(['text' => $view], $data, $callback);
     }
 
-    public function send($view, array $data, $callback)
+    public function send($view, array $data = [], $callback = null)
     {
         $message = $this->buildMessage($view, $data, $callback);
         $this->emails->push($message);
@@ -142,7 +142,7 @@ class MailGrasp implements Mailer, MailQueue
         $this->queue($view, $data, $callback, $queue);
     }
 
-    protected static function buildMessage($view, array $data, $callback)
+    protected function buildMessage($view, array $data, $callback)
     {
         $message = new Message();
 
