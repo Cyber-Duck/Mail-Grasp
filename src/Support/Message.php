@@ -93,7 +93,7 @@ class Message
         $this->data['embed'][$name] = true;
     }
 
-    public function setBody($body)
+    public function setBody($body, $type)
     {
         $this->data['body'] = $body;
     }
@@ -138,7 +138,7 @@ class Message
     public function build($view, array $data, $callback)
     {
         $this->data = [];
-        $this->addContent($view, $this->data);
+        $this->addContent($view, $data);
         $this->callMessageBuilder($callback, $this);
     }
 
