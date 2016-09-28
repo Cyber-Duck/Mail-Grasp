@@ -39,25 +39,49 @@ class Message extends \Illuminate\Mail\Message
         if ($override) {
             $this->data['to'] = [];
         }
-        $this->data['to'][$address] = $name;
+        if (is_array($address)) {
+            foreach ($address as $singleAddress) {
+                $this->data['to'][$singleAddress] = $name;
+            }
+        } else {
+            $this->data['to'][$address] = $name;
+        }
         return $this;
     }
 
     public function cc($address, $name = null)
     {
-        $this->data['cc'][$address] = $name;
+        if (is_array($address)) {
+            foreach ($address as $singleAddress) {
+                $this->data['cc'][$singleAddress] = $name;
+            }
+        } else {
+            $this->data['cc'][$address] = $name;
+        }
         return $this;
     }
 
     public function bcc($address, $name = null)
     {
-        $this->data['bcc'][$address] = $name;
+        if (is_array($address)) {
+            foreach ($address as $singleAddress) {
+                $this->data['bcc'][$singleAddress] = $name;
+            }
+        } else {
+            $this->data['bcc'][$address] = $name;
+        }
         return $this;
     }
 
     public function replyTo($address, $name = null)
     {
-        $this->data['replyTo'][$address] = $name;
+        if (is_array($address)) {
+            foreach ($address as $singleAddress) {
+                $this->data['replyTo'][$singleAddress] = $name;
+            }
+        } else {
+            $this->data['replyTo'][$address] = $name;
+        }
         return $this;
     }
 
@@ -210,9 +234,12 @@ class Message extends \Illuminate\Mail\Message
         $string = "Message\n";
         foreach ($this->data as $key => $values) {
             $string .= "\t".$key.":\n";
-            $values = (array) $values;
-            foreach ($values as $value) {
-                $string .= "\t\t".$value.":\n";
+            if (is_array($values)) {
+                foreach ($values as $key => $value) {
+                    $string .= "\t\t".$key.' '.$value."\n";
+                }
+            } else {
+                $string .= "\t\t".$values."\n";
             }
         }
         return $string;
