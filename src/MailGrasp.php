@@ -150,6 +150,10 @@ class MailGrasp implements Mailer, MailQueue
             $message->from($this->from['address'], $this->from['name']);
         }
 
+        if (!isset($data['message'])) {
+            $data['message'] = $message;
+        }
+
         $message->build($view, $data, $callback);
 
         return $message;

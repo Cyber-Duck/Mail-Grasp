@@ -3,7 +3,7 @@ namespace Cyberduck\MailGrasp\Support;
 
 use Illuminate\Support\Arr;
 
-class Message
+class Message extends \Illuminate\Mail\Message
 {
     protected $data;
 
@@ -83,7 +83,7 @@ class Message
         $this->data['attachment'][$name] = true;
     }
 
-    public function setEmbed($file)
+    public function embed($file)
     {
         $this->data['embed'][$file] = true;
     }
