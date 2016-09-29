@@ -1,4 +1,5 @@
-#MailGrasp
+# MailGrasp
+
 [![Build Status](https://travis-ci.org/Cyber-Duck/Mail-Grasp.svg?branch=master)](https://travis-ci.org/Cyber-Duck/Mail-Grasp)
 [![Latest Stable Version](https://poser.pugx.org/cyber-duck/mailgrasp/v/stable)](https://packagist.org/packages/cyber-duck/mailgrasp)
 [![Total Downloads](https://poser.pugx.org/cyber-duck/mailgrasp/downloads)](https://packagist.org/packages/cyber-duck/mailgrasp)
@@ -8,64 +9,75 @@ MailGrasp is a package for Laravel applications (5.1) to add support for email t
 
 Author: [Simone Todaro](https://github.com/SimoTod)
 
-##Installation
+Made with :heart: by ![Cyber-Duck Ltd](http://www.cyber-duck.co.uk)
+
+## Installation
+
 ```
 composer require cyber-duck/cyber-duck/mailgrasp --dev
 ```
 
-##Usage
-Add the `InteractsWithEmails` to your test class. That's it!  
-```
+## Usage
+
+Add the `InteractsWithEmails` to your test class. That's it!
+
+```php
 use \Cyberduck\MailGrasp\Testing\InteractsWithEmails;
 ```
+
 The custom mailer will be initialised as soon as the visit() method is called.  
 
-###seeEmails
+### seeEmails
+
 It checks if exactly `$count` emails have been sent or enqueued.
 
-```
+```php
 $this->visit('/route/which/sends/2/emails')
     ->seeEmails(2);
 ```
 
-###seeEmailsInQueue
+### seeEmailsInQueue
+
 It checks if exactly `$count` emails have been enqueued.
 
-```
+```php
 $this->visit('/route/which/enqueues/2/emails')
     ->seeEmailsInQueue(2);
 ```
 
-###dontSeeEmails / notSeeEmails
+### dontSeeEmails / notSeeEmails
+
 It checks that no email has been sent or enqueued.
 
-```
+```php
 $this->visit('/route/with/no/emails')
     ->dontSeeEmails();
 
-//OR
+// OR
 
 $this->visit('/route/with/no/emails')
     ->notSeeEmails();
 ```
 
-###dontSeeEmailsInQueue / notSeeEmailsInQueue
+### dontSeeEmailsInQueue / notSeeEmailsInQueue
+
 It checks that no email has been enqueued.
 
-```
+```php
 $this->visit('/route/with/no/emails')
     ->dontSeeEmailsInQueue();
 
-//OR
+// OR
 
 $this->visit('/route/with/no/emails')
     ->notSeeEmailsInQueue();
 ```
 
-###seeEmail
+### seeEmail
+
 It checks that an email matching given critaria has been sent or enqueued.
 
-```
+```php
 $this->visit('/route/which/sends/emails')
     ->seeEmail(function($m) {
         $m->from('from@test.com');
@@ -73,7 +85,7 @@ $this->visit('/route/which/sends/emails')
         $m->subject('Subject');
     });
 
-//OR
+// OR
 
 $this->visit('/route/which/sends/emails')
     ->seeEmail($this->message()
@@ -84,10 +96,11 @@ $this->visit('/route/which/sends/emails')
 
 ```
 
-###seeEmailInQueue
+### seeEmailInQueue
+
 It checks that an email matching given critaria has been enqueued.
 
-```
+```php
 $this->visit('/route/which/enqueues/emails')
     ->seeEmailInQueue(function($m) {
         $m->from('from@test.com');
@@ -95,7 +108,7 @@ $this->visit('/route/which/enqueues/emails')
         $m->subject('Subject');
     });
 
-//OR
+// OR
 
 $this->visit('/route/which/enqueues/emails')
     ->seeEmailInQueue($this->message()
@@ -105,10 +118,11 @@ $this->visit('/route/which/enqueues/emails')
     });
 ```
 
-###seeInEmail
+### seeInEmail
+
 It checks that an email matching the given critaria contains the given string.
 
-```
+```php
 $this->visit('/route/which/sends/emails')
     ->seeInEmail(function($m) {
         $m->from('from@test.com');
@@ -116,7 +130,7 @@ $this->visit('/route/which/sends/emails')
         $m->subject('Subject');
     }, 'Lorem ipsum dolor sit amet');
 
-//OR
+// OR
 
 $this->visit('/route/which/sends/emails')
     ->seeInEmail($this->message()
@@ -127,9 +141,11 @@ $this->visit('/route/which/sends/emails')
 
 ```
 
-###clickInEmail
+### clickInEmail
+
 Visit the page in the email link. Useful to test activation links.
-```
+
+```php
 $this->visit('/route/which/enqueues/emails')
     ->clickInEmail(function($m) {
         $m->from('from@test.com');
@@ -137,7 +153,7 @@ $this->visit('/route/which/enqueues/emails')
         $m->subject('Subject');
     });
 
-//OR
+// OR
 
 $this->visit('/route/which/enqueues/emails')
     ->clickInEmail($this->message()
@@ -148,7 +164,8 @@ $this->visit('/route/which/enqueues/emails')
 ```
 
 If there is more than one link in the email, it's possible to select the link passing a css selector as second parameter.
-```
+
+```php
 $this->visit('/route/which/enqueues/emails')
     ->clickInEmail(function($m) {
         $m->from('from@test.com');
@@ -156,7 +173,7 @@ $this->visit('/route/which/enqueues/emails')
         $m->subject('Subject');
     }, 'a.activation-link');
 
-//OR
+// OR
 
 $this->visit('/route/which/enqueues/emails')
     ->clickInEmail($this->message()
