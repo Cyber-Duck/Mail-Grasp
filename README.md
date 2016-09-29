@@ -5,7 +5,7 @@
 [![Total Downloads](https://poser.pugx.org/cyber-duck/mailgrasp/downloads)](https://packagist.org/packages/cyber-duck/mailgrasp)
 [![License](https://poser.pugx.org/cyber-duck/mailgrasp/license)](https://raw.githubusercontent.com/Cyber-Duck/Mail-Grasp/master/LICENSE)
 
-MailGrasp is a package for Laravel applications (5.1) to add support for email testing in your test classes.
+MailGrasp is a package for Laravel applications (5.1+) to add support for email testing in your test classes.
 
 Author: [Simone Todaro](https://github.com/SimoTod)
 
