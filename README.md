@@ -9,7 +9,7 @@ MailGrasp is a package for Laravel applications (5.1) to add support for email t
 
 Author: [Simone Todaro](https://github.com/SimoTod)
 
-Made with :heart: by ![Cyber-Duck Ltd](http://www.cyber-duck.co.uk)
+Made with :heart: by [Cyber-Duck Ltd](http://www.cyber-duck.co.uk)
 
 ## Installation
 
