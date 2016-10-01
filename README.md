@@ -14,7 +14,7 @@ Made with :heart: by [Cyber-Duck Ltd](http://www.cyber-duck.co.uk)
 ## Installation
 
 ```
-composer require cyber-duck/cyber-duck/mailgrasp --dev
+composer require cyber-duck/mailgrasp --dev
 ```
 
 ## Usage
