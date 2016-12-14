@@ -96,6 +96,29 @@ $this->visit('/route/which/sends/emails')
 
 ```
 
+### dontSeeEmail
+
+Complete opposite of seeEmail.
+
+```php
+$this->visit('/route/which/sends/emails')
+    ->dontSeeEmail(function($m) {
+        $m->from('from@test.com');
+        $m->to('to@test.com');
+        $m->subject('Subject');
+    });
+
+// OR
+
+$this->visit('/route/which/sends/emails')
+    ->dontSeeEmail($this->message()
+        ->from('from@test.com')
+        ->to('to@test.com')
+        ->subject('Subject');
+    });
+
+```
+
 ### seeEmailInQueue
 
 It checks that an email matching given critaria has been enqueued.
