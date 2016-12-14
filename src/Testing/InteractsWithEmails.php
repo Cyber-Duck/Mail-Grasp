@@ -93,6 +93,19 @@ trait InteractsWithEmails
 
         return $this;
     }
+    
+    public function dontSeeEmail($email, $queued = MailGrasp::UNQUEUED)
+    {
+        if ($queued) {
+            $found = $this->mailer->getQueuedEmail($email) ? true : false;
+        } else {
+            $found = $this->mailer->getEmail($email) ? true : false;
+        }
+
+        $this->assertFalse($found, $this->mailer->getError($email));
+
+        return $this;
+    }
 
     public function seeEmailInQueue($email)
     {
