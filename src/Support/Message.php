@@ -49,7 +49,7 @@ class Message extends \Illuminate\Mail\Message
         return $this;
     }
 
-    public function cc($address, $name = null)
+    public function cc($address, $name = null, $override = false)
     {
         if (is_array($address)) {
             foreach ($address as $singleAddress) {
@@ -61,7 +61,7 @@ class Message extends \Illuminate\Mail\Message
         return $this;
     }
 
-    public function bcc($address, $name = null)
+    public function bcc($address, $name = null, $override = false)
     {
         if (is_array($address)) {
             foreach ($address as $singleAddress) {
