@@ -50,7 +50,7 @@ class Message extends \Illuminate\Mail\Message
     }
 
     public function cc($address, $name = null, $override = false)
-    {   
+    {
         if ($override) {
             $this->data['cc'] = [];
         }
@@ -65,7 +65,7 @@ class Message extends \Illuminate\Mail\Message
     }
 
     public function bcc($address, $name = null, $override = false)
-    {   
+    {
         if ($override) {
             $this->data['bcc'] = [];
         }
