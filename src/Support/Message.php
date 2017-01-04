@@ -49,8 +49,11 @@ class Message extends \Illuminate\Mail\Message
         return $this;
     }
 
-    public function cc($address, $name = null)
+    public function cc($address, $name = null, $override = false)
     {
+        if ($override) {
+            $this->data['cc'] = [];
+        }
         if (is_array($address)) {
             foreach ($address as $singleAddress) {
                 $this->data['cc'][$singleAddress] = $name;
@@ -61,8 +64,11 @@ class Message extends \Illuminate\Mail\Message
         return $this;
     }
 
-    public function bcc($address, $name = null)
+    public function bcc($address, $name = null, $override = false)
     {
+        if ($override) {
+            $this->data['bcc'] = [];
+        }
         if (is_array($address)) {
             foreach ($address as $singleAddress) {
                 $this->data['bcc'][$singleAddress] = $name;
