@@ -89,7 +89,10 @@ trait InteractsWithEmails
             $found = $this->mailer->getEmail($email) ? true : false;
         }
 
-        $this->assertTrue($found, $this->mailer->getError($email));
+        $this->assertTrue(
+            $found,     
+            "Did not expect $email, found it"
+        );
 
         return $this;
     }
@@ -112,7 +115,11 @@ trait InteractsWithEmails
         return $this->seeEmail($email, MailGrasp::QUEUED);
     }
 
-
+    public function dontSeeEmailInQueue($email)
+    {
+        return $this->dontSeeEmail($email, MailGrasp::QUEUED)
+    }
+    
     public function seeInEmail($email, $text)
     {
         $found = $this->mailer->getEmail($email) ? true : false;
