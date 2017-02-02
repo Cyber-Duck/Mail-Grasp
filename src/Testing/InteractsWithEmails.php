@@ -103,7 +103,7 @@ trait InteractsWithEmails
         }
 
         $this->assertFalse(
-            $found, 
+            $found,
             "Did not expect {$this->mailer->getEmail($email)}, found it"
         );
 
