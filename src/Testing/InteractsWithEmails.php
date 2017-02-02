@@ -117,7 +117,7 @@ trait InteractsWithEmails
 
     public function dontSeeEmailInQueue($email)
     {
-        return $this->dontSeeEmail($email, MailGrasp::QUEUED)
+        return $this->dontSeeEmail($email, MailGrasp::QUEUED);
     }
     
     public function seeInEmail($email, $text)
