@@ -104,7 +104,7 @@ trait InteractsWithEmails
 
         $this->assertFalse(
             $found, 
-            "Did not expect {$this->mailer->getEmail($email)}, found it";
+            "Did not expect {$this->mailer->getEmail($email)}, found it"
         );
 
         return $this;
