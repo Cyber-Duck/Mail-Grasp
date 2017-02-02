@@ -89,10 +89,7 @@ trait InteractsWithEmails
             $found = $this->mailer->getEmail($email) ? true : false;
         }
 
-        $this->assertTrue(
-            $found,     
-            "Did not expect $email, found it"
-        );
+        $this->assertTrue($found, $this->mailer->getError($email));
 
         return $this;
     }
@@ -105,7 +102,10 @@ trait InteractsWithEmails
             $found = $this->mailer->getEmail($email) ? true : false;
         }
 
-        $this->assertFalse($found, $this->mailer->getError($email));
+        $this->assertFalse(
+            $found, 
+            "Did not expect {$this->mailer->getEmail($email)}, found it";
+        );
 
         return $this;
     }
