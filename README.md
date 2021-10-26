@@ -1,3 +1,6 @@
+# 🚨 Discontinued 🚨
+This functionality is redily available in later releases of Laravel.
+
 # MailGrasp
 
 [![Build Status](https://travis-ci.org/Cyber-Duck/Mail-Grasp.svg?branch=master)](https://travis-ci.org/Cyber-Duck/Mail-Grasp)
